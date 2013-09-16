@@ -1,0 +1,7 @@
+import(pracma, reshape, plotrix, microRNA, biomaRt, Biostrings, Biobase, DBI)
+
+export(
+	roleswitch,
+	getSeedMatrix,
+	diagnosticPlot
+)
