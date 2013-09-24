@@ -228,15 +228,18 @@ roleswitch <- function(x.o, z.o, c, maxiter=200, tol=1e-5,
 		
 		delta.p <- max(abs(p.x - p.x.prev))
 		
+		delta.p2 <- max(abs(p.z - p.z.prev))
+		
 		delta.p.all <- c(delta.p.all, delta.p)
 				
-		if(delta.p < tol) {			
+		if(delta.p < tol & delta.p2 < tol) {			
 			
 			converged <- T
 			
 		} else {
 														
 			p.x.prev <- p.x
+			p.z.prev <- p.z
 		}
 	}
 	
