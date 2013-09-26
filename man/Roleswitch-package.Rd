@@ -12,7 +12,7 @@ Infer Probabilities of MiRNA-mRNA Interaction Signature (ProMISe) using paired e
 \tabular{ll}{
 Package: \tab Roleswitch\cr
 Type: \tab Package\cr
-Version: \tab 0.99.2\cr
+Version: \tab 0.99.3\cr
 Date: \tab 2013-09-04\cr
 License: \tab GPL-2\cr
 }
