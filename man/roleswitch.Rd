@@ -5,7 +5,7 @@
 Infer miRNA-mRNA interactions using paired expression data from a single sample.
 }
 \description{
-Infer Probabilities of MiRNA-mRNA Interaction Signature (ProMISe) using paired expression data from a single sample. Roleswitch operates in two phases by inferring the probabilities of mRNA (miRNA) being the targets ("targets") of miRNA (mRNA), taking into account the expression of all of the mRNAs (miRNAs) due to their potential competition for the same miRNA (mRNA). Due to mRNA transcription and miRNA repression events simultaneously happening in the cell, Roleswitch assumes that the total transcribed mRNA levels are higher than the observed (equilibrium) mRNA levels and iteratively updates the total transcription of each mRNA targets based on the above inference.
+Infer Probabilities of MiRNA-mRNA Interaction Signature (ProMISe) using paired expression data from a single sample. Roleswitch operates in two phases by inferring the probabilities of mRNA (miRNA) being the targets ("targets") of miRNA (mRNA), taking into account the expression of all of the mRNAs (miRNAs) due to their potential competition for the same miRNA (mRNA). Due to mRNA transcription and miRNA repression events simultaneously happening in the cell, Roleswitch assumes that the total transcribed mRNA levels are higher than the observed (equilibrium) mRNA levels and iteratively updates the total transcription of each mRNA targets based on the above inference. NB: in the paper, we used ProMISe as both the model name and inferred score name.
 }
 \usage{
 roleswitch(x.o, z.o, c, maxiter = 200, tol = 1e-05,
@@ -59,19 +59,19 @@ The model assumes total expression of mRNA is unobserved and higher than the obs
 
 (4) Repeat 1-3 until convergence
 
-User provide roleswitch an N x M seed-match matrix containg the number of target sites for each mRNA i and miRNA k. Otherwise, \code{\link{getSeedMatrix}} will be used to retrieve seed-match matrix.
+User provide roleswitch an N x M seed-match matrix containg the number of target sites for each mRNA i and miRNA k. Otherwise, \code{\link{getSeedMatrix}} will be used to retrieve seed-match matrix. The output ProMISe is one of the matrices: mRNA competition; miRNA competition; joint competition. We recommand using mRNA competition or joint competition.
 }
 \value{
 An object list (defined class: ProMISe) containing the following items:
 \item{x.t:}{infered total N x 1 mRNA expression vector}
-\item{p.x:}{infered N x M miRNA-mRNA probability matrix (mRNA plays as targets of miRNA)}
-\item{p.z:}{infered N x M mRNA-miRNA probability matrix (miRNA plays as targets of mRNA)}
-\item{p.xz:}{Dot prodct of p.x and p.z as the final Roleswitch prediction or the ProMISe.}
+\item{p.x:}{infered N x M miRNA-mRNA probability matrix (mRNA competition)}
+\item{p.z:}{infered N x M mRNA-miRNA probability matrix (miRNA competition)}
+\item{p.xz:}{Dot prodct of p.x and p.z (joint competition).}
 \item{x.o, z.t, c:}{The same as the inputs.}
 \item{delta.p.all}{Difference between p.x at two adjacent iterations to monitor the progress of convergence.}
 }
 \references{
-Li, Y., ..., Zhang, Z., Inference of probabilistic miRNA-mRNA interaction signatures and its application in novel cancer biomarker discovery (in preparation).
+Li, Y., ..., Zhang, Z., Infer probabilistic miRNA-mRNA interaction signatures in cancers: a role-switch approach (in preparation).
 }
 \author{
 Yue Li

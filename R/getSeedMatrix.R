@@ -9,7 +9,7 @@ getSeedMatrix <- function(mRNA, miRNA, species="human", id_type="ensembl_transcr
     
     hsTargets <- get("hsTargets", envir = environment())
     
-	  seedMatrix <- with(hsTargets, table(target, name))
+	seedMatrix <- with(hsTargets, table(target, name))
 		
 	} else {
 	

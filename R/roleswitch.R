@@ -18,9 +18,9 @@
 # ProMISe: A list containing
 # x.t: infered total N x 1 mRNA expression vector
 # z.t: infered total M x 1 miRNA expression vector
-# p.x: infered N x M miRNA-mRNA probability matrix (mRNA plays as targets of miRNA)
-# p.z: infered N x M mRNA-miRNA probability matrix (miRNA plays as targets of mRNA)
-# p.xz: dot product of p.x and p.z (final inference)
+# p.x: infered N x M miRNA-mRNA probability matrix (mRNA competition)
+# p.z: infered N x M mRNA-miRNA probability matrix (miRNA competition)
+# p.xz: element-wise product of p.x and p.z (joint competition)
 
 roleswitch <- function(x.o, z.o, c, maxiter=200, tol=1e-5, 
 	eta.z = 0.001, expected.total=1.3, verbose=TRUE, 
@@ -180,7 +180,7 @@ roleswitch <- function(x.o, z.o, c, maxiter=200, tol=1e-5,
 										
 		t <- t + 1
 		
-		### miRNA-mRNA standard model ###
+		### miRNA competition for mRNA ###
 		# total _e_xpressed _s_ites per miRNA
 		ex.total <- matrix(rep(t(c) %*% x.t, nrow(x.t)), nrow(x.t), byrow=T)
 		
@@ -206,7 +206,7 @@ roleswitch <- function(x.o, z.o, c, maxiter=200, tol=1e-5,
 		# normalize by total transcribed (limited by cellular capacity)
 		x.t <- (x.t * x.total)/sum(x.t)
 		
-		### mRNA-miRNA role-switch model ###		
+		### mRNA competition for miRNA ###		
 		# total expressed miRNA per mRNA (ei: _e_xpression m_i_RNA)
 		ez.total <- matrix(rep(c %*% z.t, nrow(z.t)), ncol=nrow(z.t))
 		
@@ -263,13 +263,30 @@ roleswitch <- function(x.o, z.o, c, maxiter=200, tol=1e-5,
 		
 		rownames(x.t) <- genes
 	}
-			
-	promise <- list(x.t=x.t, z.t=z.o0, p.x=p.x, p.z=p.z, p.xz=p.x*p.z, 
+	
+	p.x <- normlize.p(p.x)
+	p.z <- normlize.p(p.z)
+	p.xz <- normlize.p(p.x*p.z)
+	
+	promise <- list(x.t=x.t, z.t=z.o0, p.x=p.x, p.z=p.z, p.xz=p.xz, 
        c=c0, x.o=x.o0, z.o=z.o0, delta.p.all=delta.p.all[-1])
   
   class(promise) <- "ProMISe"
   
   promise
 }
+
+normlize.p <- function(p) {
+	
+	p <- apply(p, 1, function(x)x/sum(x))
+	
+	p <- apply(p, 2, function(x)x/sum(x))
+	
+	p	
+}
+
+
+
+
 
 
