@@ -1,0 +1,16 @@
+citEntry(entry="article",
+         title = "Inferring probabilistic miRNA-mRNA interaction signatures in cancers: a role-switch approach",
+         author = personList(
+        as.person("Yue Li"), 
+        as.person("Cheng Liang"),
+	as.person("Ka-Chun Wong"),
+	as.person("Ke Jin"),
+	as.person("Zhaolei Zhang")),
+	year = 2014,
+	journal = "Nucleic Acids Research",
+	volume = "42",
+	number = "9",
+	pages = "e76",
+	doi = "doi:10.1093/nar/gku182"
+	textVersion = paste("Yue Li, Cheng Liang, Ka-Chun Wong, Ke Jin and Zhaolei Zhang (2014).",
+          "Inferring probabilistic miRNA-mRNA interaction signatures in cancers: a role-switch approach") )
