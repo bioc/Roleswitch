@@ -82,7 +82,7 @@ getSeedMatrix <- function(mRNA, miRNA, species="human", id_type="ensembl_transcr
 			
 			mart <- useMart(biomart=biomart, dataset=dataset)
 			
-			geneInfo <- getBM(mart=mart, attributes=c(mRNA_id_type, "ensembl_gene_id", "external_gene_id", "3_utr_start", "3_utr_end"), filters=mRNA_id_type, values=mRNA_id)
+			geneInfo <- getBM(mart=mart, attributes=c(mRNA_id_type, "ensembl_gene_id", "external_gene_name", "3_utr_start", "3_utr_end"), filters=mRNA_id_type, values=mRNA_id)
 			
 			geneInfo$utrlen <- abs(geneInfo$`3_utr_end`-geneInfo$`3_utr_start`)
 		
@@ -91,7 +91,7 @@ getSeedMatrix <- function(mRNA, miRNA, species="human", id_type="ensembl_transcr
 		
 		if(convert2genesymbol) {
 			
-			rownames(seedMatrix) <- geneInfo[match(mRNA_id, geneInfo[,mRNA_id_type]),"external_gene_id"]
+			rownames(seedMatrix) <- geneInfo[match(mRNA_id, geneInfo[,mRNA_id_type]),"external_gene_name"]
 			
 		}		
 	} 
@@ -114,7 +114,7 @@ getTranscriptIDwithLongest3UTR <- function(mRNA_id,
 			
 	mart <- useMart(biomart=biomart, dataset=dataset)
 	
-	geneInfo <- getBM(mart=mart, attributes=c(mRNA_id_type, "ensembl_gene_id", "external_gene_id", "3_utr_start", "3_utr_end"), filters=mRNA_id_type, values=mRNA_id)
+	geneInfo <- getBM(mart=mart, attributes=c(mRNA_id_type, "ensembl_gene_id", "external_gene_name_id", "3_utr_start", "3_utr_end"), filters=mRNA_id_type, values=mRNA_id)
 	
 	geneInfo <- geneInfo[!is.na(geneInfo$`3_utr_start`),]
 	
