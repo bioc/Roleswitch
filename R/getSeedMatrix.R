@@ -114,7 +114,7 @@ getTranscriptIDwithLongest3UTR <- function(mRNA_id,
 			
 	mart <- useMart(biomart=biomart, dataset=dataset)
 	
-	geneInfo <- getBM(mart=mart, attributes=c(mRNA_id_type, "ensembl_gene_id", "external_gene_name_id", "3_utr_start", "3_utr_end"), filters=mRNA_id_type, values=mRNA_id)
+	geneInfo <- getBM(mart=mart, attributes=c(mRNA_id_type, "ensembl_gene_id", "external_gene_name", "3_utr_start", "3_utr_end"), filters=mRNA_id_type, values=mRNA_id)
 	
 	geneInfo <- geneInfo[!is.na(geneInfo$`3_utr_start`),]
 	
