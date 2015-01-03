@@ -9,7 +9,7 @@ Infer Probabilities of MiRNA-mRNA Interaction Signature (ProMISe) using paired e
 }
 \usage{
 roleswitch(x.o, z.o, c, maxiter = 200, tol = 1e-05,
-  eta.z = 0.001, expected.total = 1.3, verbose = TRUE, 
+  eta.z = 0.001, expected.total = 1.3, verbose = TRUE,
   annotation.db, probe2genesymbol=TRUE, ...)
 }
 %- maybe also 'usage' for other objects documented here.

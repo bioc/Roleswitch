@@ -22,7 +22,7 @@ diagnosticPlot <- function(pred) {
 	# obs mRNA expression
 	color2D.matplot(x.o, extremes=c("white", "black"),
 		main=sprintf("(%s) Obs. mRNA expr", LETTERS[i]), 
-		axes=FALSE, xlab="", ylab="", show.values=T)
+		axes=FALSE, xlab="", ylab="", show.values=2)
 	
 	axis(2,at=0.5:(nrow(x.o)-0.5),las=2,labels=nrow(x.o):1)
 	
@@ -31,7 +31,7 @@ diagnosticPlot <- function(pred) {
 	# obs miRNA expression
 	color2D.matplot(z.o, extremes=c("white", "black"),
 		main=sprintf("(%s) Obs. miRNA expr", LETTERS[i]), axes=FALSE, xlab="", ylab="",
-		show.values=T)
+		show.values=2)
 		
 	axis(2,at=0.5:(nrow(z.o)-0.5),las=2,labels=nrow(z.o):1)	
 	
@@ -39,8 +39,7 @@ diagnosticPlot <- function(pred) {
   
 	# obs seed matrix
 	color2D.matplot(c, extremes=c("white", "black"),
-		main=sprintf("(%s) Obs. seed match", LETTERS[i]), axes=FALSE, xlab="miRNA", ylab="mRNA",
-		show.values=T)
+		main=sprintf("(%s) Obs. seed match", LETTERS[i]), axes=FALSE, xlab="miRNA", ylab="mRNA", show.values=2)
 	
 	axis(1,at=0.5:(nrow(z.o)-0.5),las=1,labels=1:nrow(z.o))
 	
@@ -51,7 +50,7 @@ diagnosticPlot <- function(pred) {
 	# inferred mRNA expression
 	color2D.matplot(x.t, extremes=c("white", "black"),
 		main=sprintf("(%s) Est. mRNA total", LETTERS[i]), axes=FALSE, xlab="", ylab="",
-		show.values=T)
+		show.values=2)
 	
 	axis(2,at=0.5:(nrow(x.o)-0.5),las=2,labels=nrow(x.o):1)
 		
@@ -59,8 +58,8 @@ diagnosticPlot <- function(pred) {
   
 	# inferred miRNA-mRNA Probability Matrix
 	color2D.matplot(p.x, extremes=c("white", "black"),
-		main=sprintf("(%s) miRNA-mRNA Prob.", LETTERS[i]), axes=FALSE, xlab="miRNA", ylab="mRNA",
-		show.values=T)
+		main=sprintf("(%s) mRNA competition", LETTERS[i]), axes=FALSE, xlab="miRNA", ylab="mRNA",
+		show.values=2)
 	
 	axis(1,at=0.5:(nrow(z.o)-0.5),las=1,labels=1:nrow(z.o))
 	
@@ -70,8 +69,8 @@ diagnosticPlot <- function(pred) {
   
 	# inferred mRNA-miRNA Probability Matrix
 	color2D.matplot(p.z, extremes=c("white", "black"),
-		main=sprintf("(%s) mRNA-miRNA Prob.", LETTERS[i]), axes=FALSE, xlab="miRNA", ylab="mRNA",
-		show.values=T)
+		main=sprintf("(%s) miRNA competition", LETTERS[i]), axes=FALSE, xlab="miRNA", ylab="mRNA",
+		show.values=2)
 	
 	axis(1,at=0.5:(nrow(z.o)-0.5),las=1,labels=1:nrow(z.o))
 	
@@ -81,8 +80,8 @@ diagnosticPlot <- function(pred) {
   
 	# inferred final Probability Matrix
 	color2D.matplot(p.xz, extremes=c("white", "black"),
-		main=sprintf("(%s) ProMISe", LETTERS[i]), axes=FALSE, xlab="miRNA", ylab="mRNA",
-		show.values=T)
+		main=sprintf("(%s) Joint competition", LETTERS[i]), axes=FALSE, xlab="miRNA", ylab="mRNA",
+		show.values=2)
 	
 	axis(1,at=0.5:(nrow(z.o)-0.5),las=1,labels=1:nrow(z.o))
 	

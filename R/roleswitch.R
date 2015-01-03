@@ -18,13 +18,13 @@
 # ProMISe: A list containing
 # x.t: infered total N x 1 mRNA expression vector
 # z.t: infered total M x 1 miRNA expression vector
-# p.x: infered N x M miRNA-mRNA probability matrix (mRNA competition)
-# p.z: infered N x M mRNA-miRNA probability matrix (miRNA competition)
-# p.xz: element-wise product of p.x and p.z (joint competition)
+# p.x: infered N x M miRNA-mRNA probability matrix (mRNA plays as targets of miRNA)
+# p.z: infered N x M mRNA-miRNA probability matrix (miRNA plays as targets of mRNA)
+# p.xz: element-wise product of p.x and p.z (final inference)
 
 roleswitch <- function(x.o, z.o, c, maxiter=200, tol=1e-5, 
-	eta.z = 0.001, expected.total=1.3, verbose=TRUE, 
-                       annotation.db, probe2genesymbol=TRUE, ...) {	
+	eta.z = 0.001, expected.total=1.3, # normalize=FALSE,
+	verbose=TRUE, annotation.db, probe2genesymbol=TRUE, ...) {	
   
   # process eSet/ExpressionSet
   if(class(x.o)=="eSet" || class(x.o)=="ExpressionSet") {
@@ -146,7 +146,7 @@ roleswitch <- function(x.o, z.o, c, maxiter=200, tol=1e-5,
 			
 	c0[is.na(c0)] <- 0
   
-  c <- c0
+	c <- c0
 	
 	# remove mRNA (miRNA) that have no targeting miRNA (mRNA targets)
 	rowidx <- which(apply(c, 1, sum) > 0)
@@ -246,7 +246,7 @@ roleswitch <- function(x.o, z.o, c, maxiter=200, tol=1e-5,
 	# recover original list
 	if(!identical(rownames(p.x), genes) || !identical(colnames(p.x), mirna)) {
 		
-		message("Some genes or miRNA are left out in calculation\nb/c they have zero target sites or targets!\nTheir probabilities are set to zero in the output matrices")
+		if(verbose) message("Some genes or miRNA are left out in calculation\nb/c they have zero target sites or targets!\nTheir probabilities are set to zero in the output matrices")
 		
 		p.x <- p.x[match(genes, rownames(p.x)), match(mirna, colnames(p.x))]
 		p.z <- p.z[match(genes, rownames(p.z)), match(mirna, colnames(p.z))]
@@ -264,9 +264,13 @@ roleswitch <- function(x.o, z.o, c, maxiter=200, tol=1e-5,
 		rownames(x.t) <- genes
 	}
 	
-	p.x <- normlize.p(p.x)
-	p.z <- normlize.p(p.z)
-	p.xz <- normlize.p(p.x*p.z)
+	p.xz <- p.x*p.z
+	
+	# if(normalize) {
+		# p.xz <- normalize.p(p.xz, 2)
+		# p.x <- normalize.p(p.x, 2)
+		# p.z <- normalize.p(p.z, 2)		
+	# }		
 	
 	promise <- list(x.t=x.t, z.t=z.o0, p.x=p.x, p.z=p.z, p.xz=p.xz, 
        c=c0, x.o=x.o0, z.o=z.o0, delta.p.all=delta.p.all[-1])
@@ -276,17 +280,28 @@ roleswitch <- function(x.o, z.o, c, maxiter=200, tol=1e-5,
   promise
 }
 
-normlize.p <- function(p) {
+# normalize.p <- function(p, mydim) {
 	
-	p <- apply(p, 1, function(x)x/sum(x))
+	# p[is.nan(p)] <- 0
 	
-	p <- apply(p, 2, function(x)x/sum(x))
+	# s <- apply(p,mydim,sum)
 	
-	p	
-}
-
-
-
-
+	# if(mydim==1) {
+				
+		# p <- p/repmat(as.matrix(s),1,ncol(p))
+		
+		# # p[is.nan(p)] <- 1/ncol(p)
+		
+	# } else if(mydim==2) {
+				
+		# p <- p/repmat(s,nrow(p),1)
+		
+		# # p[is.nan(p)] <- 1/nrow(p)
+	# }		
+	
+	# p[is.nan(p)] <- 0
+	
+	# p
+# }
 
 
