@@ -2,7 +2,7 @@ Package: Roleswitch
 Type: Package
 Title: Infer miRNA-mRNA interactions using paired expression data from
         a single sample
-Version: 1.12.0
+Version: 1.13.0
 Date: 2013-12-20
 Author: Yue Li
 Maintainer: Yue Li <yueli@cs.toronto.edu>
